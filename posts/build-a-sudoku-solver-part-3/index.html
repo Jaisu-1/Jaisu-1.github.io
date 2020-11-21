@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="Jaisurya Nanduri">
+    <meta name="description" content="Game Solver With the Game and it&rsquo;s logic properly set, we can now move on to creating a Game Solver &ldquo;AI&rdquo;. In this case, our AI will be a simple optimizing algorithm. One of the reasons, I created this project is to teach myself how to make Game AI, later on involving Deep Learning but a good way to develop intuition is to solve a small scale problem such as here.">
+    <meta name="keywords" content="blog,developer,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Build a Sudoku Solver - Part 3"/>
+<meta name="twitter:description" content="Game Solver With the Game and it&rsquo;s logic properly set, we can now move on to creating a Game Solver &ldquo;AI&rdquo;. In this case, our AI will be a simple optimizing algorithm. One of the reasons, I created this project is to teach myself how to make Game AI, later on involving Deep Learning but a good way to develop intuition is to solve a small scale problem such as here."/>
+
+    <meta property="og:title" content="Build a Sudoku Solver - Part 3" />
+<meta property="og:description" content="Game Solver With the Game and it&rsquo;s logic properly set, we can now move on to creating a Game Solver &ldquo;AI&rdquo;. In this case, our AI will be a simple optimizing algorithm. One of the reasons, I created this project is to teach myself how to make Game AI, later on involving Deep Learning but a good way to develop intuition is to solve a small scale problem such as here." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-3/" />
+<meta property="article:published_time" content="2020-10-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-13T00:00:00+00:00" />
+
+
+
+    <title>
+  Build a Sudoku Solver - Part 3 · Jaisu&#39;s Blog
+</title>
+
+    
+      <link rel="canonical" href="https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-3/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.330c180493e79cf780a97cf007d9748a99f1bd375d8019a2f5a3c97b4dad88cd.css" integrity="sha256-MwwYBJPnnPeAqXzwB9l0ipnxvTddgBmi9aPJe02tiM0=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.ec0a9a93f8c5c41d6d1ef503975f796c43be3e3d69aba427ebeed7e040de7f1c.css" integrity="sha256-7Aqak/jFxB1tHvUDl195bEO&#43;Pj1pq6Qn6&#43;7X4EDefxw=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+      <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+    
+
+    <meta name="generator" content="Hugo 0.73.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="colorscheme-auto"
+        onload=" twemoji.parse(document.body); "
+  >
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      Jaisu&#39;s Blog
+    </a>
+    
+      
+        <span id="dark-mode-toggle" class="float-right">
+          <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </span>
+      
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/about/">About Me/ Contact</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/projects/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/resume/">Resume</a>
+            </li>
+          
+        
+        
+        
+          <li class="navigation-item separator">
+            <span>|</span>
+          </li>
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Build a Sudoku Solver - Part 3</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime='2020-10-13T00:00:00Z'>
+                October 13, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              7-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <a href="/tags/development/">Development</a>
+      <span class="separator">•</span>
+    <a href="/tags/python/">Python</a>
+      <span class="separator">•</span>
+    <a href="/tags/beginner/">Beginner</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <h2 id="game-solver">Game Solver</h2>
+<p>With the Game and it&rsquo;s logic properly set, we can now move on to creating a Game Solver &ldquo;AI&rdquo;. In this case, our AI will be a simple optimizing algorithm. One of the reasons, I created this project is to teach myself how to make Game AI, later on involving Deep Learning but a good way to develop intuition is to solve a small scale problem such as here. The AI will try to solve any given Sudoku Board in the least time possible. The problem statement can safely assume that the sudoku board given will be valid and solvable, as they will be tested to be so, from the previous class methods.The first step to solving any problem is to come up with a naive, brute-force approach and we shall do the same here.</p>
+<div align="center">
+    <img src="/Sudoku-Resources/possiblesolves.png" alt="Solving" width=70%>
+</div>
+<h3 id="naive-approach">Naive Approach</h3>
+<p>Given any sudoku board, how do we fill it with values such that it will reach a solved state? The simplest and perhaps the dumbest way to solve it is to literally try out every possible solution and check which one would solve it correctly. Is this approach really that bad? We can estimate how bad it can be with asymptomatic time complexity analysis.</p>
+<p>Estimating this approach is really easy, we simply have to calculate the no. of possible permutations for the board. There are 81 cells in the board and each cell can take on a possible 9 values which gives us 9^81 possible boards and calculating the solution would take a time complexity of O(9^81) or O(9^(M*N)) for other values of Board Grid Sizes.
+(Even though Sudoku is typically played in a 9 x 9 grid, it can take the form of other variants.)</p>
+<p>This is extremely expensive by time and comes close to 3.16887646 × 10^64 years!! if each board took 1nanosecond to compute. So, given my vested interest in being able to see at least one sudoku solved, I want to improve on this solution.
+How do we do that though? One way would be to avoid taking paths we&rsquo;ve already taken. Without using additional space, if we could solve a sub-problem and then try solutions from that point on, then it would significantly reduce the time complexity. One such technique is called as Backtracking.</p>
+<h3 id="backtracking">Backtracking</h3>
+<p>Backtracking is an algorithmic-technique for solving problems recursively by trying to build a solution incrementally, one piece at a time, removing those solutions that fail to satisfy the constraints of the problem at any point of time.
+A backtracking algorithm can be thought of as a tree of possibilities. In this tree, the root node is the original problem, each node is a candidate and the leaf nodes are possible solution candidates. We traverse the tree depth-first from root to a leaf node to solve the problem.</p>
+<p>In our example of the Sudoku , we try filling digits one by one. Whenever we find that current digit cannot lead to a solution, we remove it (backtrack) and try next digit. This is better than naive approach (generating all possible combinations of digits and then trying every combination one by one) as it drops a set of permutations whenever it backtracks. These algorithms are by definition, recursive solutions and recursive algorithms must have well defined terminating or exit conditions.</p>
+<h4 id="exit-conditions--">Exit Conditions -</h4>
+<p>We can exit our problem once we have a Valid Board with no empty cells. So, our solution will require us to at all points, find empty cells and check for Validity. These can be factored out into seperate methods to be called in every iteration of the recursion as follows -</p>
+<h4 id="is-valid">Is Valid</h4>
+<p>Checks if the Board is Valid or Not, is imported from the Previous Game Logic Class</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">check_win</span>(<span style="color:#999">self</span>):
+
+    <span style="color:#000;font-weight:bold">for</span> row <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">9</span>):
+        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_row(row):
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">False</span>
+
+    <span style="color:#000;font-weight:bold">for</span> column <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">9</span>):
+        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_column(column):
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">False</span>
+
+    <span style="color:#000;font-weight:bold">for</span> row <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">3</span>):
+        <span style="color:#000;font-weight:bold">for</span> col <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">3</span>):
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_square(row, col):
+                <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">False</span>
+
+    <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>game_over <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">True</span>
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">True</span>
+</code></pre></div><p>Next, we need to check for empty cells.</p>
+<h4 id="find-empty">Find Empty</h4>
+<p>We need to find empty cells. If there&rsquo;s none, then we can simply check for validity and exit the recursion. If not, we return the row and column of the nearest empty cell, insert a random integer from 0..9 and check for validity again and so on. The find empty method would be a simple O(N ^ 2) brute force search for a cell whose value is 0.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">find_empty</span>(<span style="color:#999">self</span>, bo):
+    <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(bo)):
+        <span style="color:#000;font-weight:bold">for</span> j <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(bo[<span style="color:#099">0</span>])):
+            <span style="color:#000;font-weight:bold">if</span> bo[i][j] <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
+                <span style="color:#000;font-weight:bold">return</span> (i, j)  <span style="color:#998;font-style:italic"># row, col</span>
+
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">None</span>
+</code></pre></div><p>Now that we have 2 of our helper methods ready, we can begin solving the sudoku board with the Backtracking algorithm which can be described as follows -</p>
+<ol>
+<li>Find nearest empty cell.</li>
+<li>Place a number, between 1 and ‘n=9’, in it and validate the candidate grid.</li>
+<li>If any of the constraints fails, abandon candidate and repeat step 2 with the next number. Otherwise, check if the goal is reached.</li>
+<li>If a solution is found, stop searching. Otherwise, repeat steps 2 to 4.</li>
+</ol>
+<p>Visually we can think of the algorithm as the following</p>
+<div align="center">
+    <img src="/Sudoku-Resources/solving.gif" alt="Solving">
+</div>
+<p>Our code is very simple for the algorithm -</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">solve</span>(<span style="color:#999">self</span>, board):
+    <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">    The Main Game Solver lies in this method.
+</span><span style="color:#d14">    Solves through backtracking and reduces Time Complexity from O(N!)
+</span><span style="color:#d14">    to O(n ^ m) where m = n. of blank spaces.
+</span><span style="color:#d14">    &#34;&#34;&#34;</span>
+
+    <span style="color:#998;font-style:italic"># Find nearest empty cell</span>
+    find <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>find_empty(board)
+
+    <span style="color:#998;font-style:italic"># No empty cell, so return because we&#39;ve found our solution</span>
+    <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> find:
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">True</span>
+    <span style="color:#000;font-weight:bold">else</span>:
+    <span style="color:#998;font-style:italic"># Get nearest empty row and column</span>
+        row, col <span style="color:#000;font-weight:bold">=</span> find
+
+    <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">1</span>,<span style="color:#099">10</span>):
+
+        <span style="color:#998;font-style:italic"># Try all solutions and put in place</span>
+        <span style="color:#000;font-weight:bold">if</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>valid(board, i, (row, col)):
+            board[row][col] <span style="color:#000;font-weight:bold">=</span> i
+
+            <span style="color:#998;font-style:italic"># If it&#39;s a solution, then return</span>
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>solve(board):
+                <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">True</span>
+
+            <span style="color:#998;font-style:italic"># Else, make it empty again</span>
+            <span style="color:#000;font-weight:bold">else</span>:
+                board[row][col] <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+
+    <span style="color:#998;font-style:italic"># No solution has been found, so return false</span>
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">False</span>
+</code></pre></div><p>And thus, we&rsquo;d have solved any sudoku board as will be seen in the GUI later.</p>
+<h2 id="game-generator">Game Generator</h2>
+<p>With the ability to solve any Sudoku Board, can we unlock something else after this? Yes, the ability to generate games. How do we do that? A very simple way is to make a solve board and then delete random cells depending on the difficulty level.</p>
+<ol>
+<li>Start with an empty grid.</li>
+<li>Generate a complete solution using backtracking that fills up the grid.</li>
+<li>Remove numbers from the grid, while making sure the solution is still unique.</li>
+</ol>
+<h5 id="generate-a-complete-solution--">Generate a complete solution -</h5>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">sudokuGen</span>():
+    <span style="color:#d14">&#39;&#39;&#39;Generates a completed sudoku. Sudoku is completly random&#39;&#39;&#39;</span>
+    cells <span style="color:#000;font-weight:bold">=</span> [i <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">81</span>)] <span style="color:#998;font-style:italic">## our cells is the positions of cells not currently set</span>
+    sudoku <span style="color:#000;font-weight:bold">=</span> emptySudoku()
+    <span style="color:#000;font-weight:bold">while</span> <span style="color:#0086b3">len</span>(cells) <span style="color:#000;font-weight:bold">!=</span> <span style="color:#099">0</span>:
+        lowestNum <span style="color:#000;font-weight:bold">=</span> []
+        Lowest <span style="color:#000;font-weight:bold">=</span> []
+
+        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> cells:
+            lowestNum<span style="color:#000;font-weight:bold">.</span>append(sudoku[i]<span style="color:#000;font-weight:bold">.</span>lenOfPossible())  <span style="color:#998;font-style:italic">## finds all the lengths of of possible answers for each remaining cell</span>
+        m <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">min</span>(lowestNum)  <span style="color:#998;font-style:italic">## finds the minimum of those</span>
+
+        <span style="color:#d14">&#39;&#39;&#39;Puts all of the cells with the lowest number of possible answers in a list titled Lowest&#39;&#39;&#39;</span>
+        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> cells:
+            <span style="color:#000;font-weight:bold">if</span> sudoku[i]<span style="color:#000;font-weight:bold">.</span>lenOfPossible() <span style="color:#000;font-weight:bold">==</span> m:
+                Lowest<span style="color:#000;font-weight:bold">.</span>append(sudoku[i])
+
+        <span style="color:#d14">&#39;&#39;&#39;Now we randomly choose a possible answer and set it to the cell&#39;&#39;&#39;</span>
+        choiceElement <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span>choice(Lowest)
+        choiceIndex <span style="color:#000;font-weight:bold">=</span> sudoku<span style="color:#000;font-weight:bold">.</span>index(choiceElement)
+        cells<span style="color:#000;font-weight:bold">.</span>remove(choiceIndex)                 
+
+        position1 <span style="color:#000;font-weight:bold">=</span> choiceElement<span style="color:#000;font-weight:bold">.</span>checkPosition()
+        <span style="color:#000;font-weight:bold">if</span> choiceElement<span style="color:#000;font-weight:bold">.</span>solvedMethod() <span style="color:#000;font-weight:bold">==</span> <span style="color:#999">False</span>:  <span style="color:#998;font-style:italic">##the actual setting of the cell</span>
+            possibleValues <span style="color:#000;font-weight:bold">=</span> choiceElement<span style="color:#000;font-weight:bold">.</span>returnPossible()
+            finalValue <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span>choice(possibleValues)
+            choiceElement<span style="color:#000;font-weight:bold">.</span>setAnswer(finalValue)
+
+            <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> cells:  <span style="color:#998;font-style:italic">##now we iterate through the remaining unset cells and remove the input if it&#39;s in the same row, col, or box</span>
+                position2 <span style="color:#000;font-weight:bold">=</span> sudoku[i]<span style="color:#000;font-weight:bold">.</span>checkPosition()
+                <span style="color:#000;font-weight:bold">if</span> position1[<span style="color:#099">0</span>] <span style="color:#000;font-weight:bold">==</span> position2[<span style="color:#099">0</span>]:
+                    sudoku[i]<span style="color:#000;font-weight:bold">.</span>remove(finalValue)
+                <span style="color:#000;font-weight:bold">if</span> position1[<span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">==</span> position2[<span style="color:#099">1</span>]:
+                    sudoku[i]<span style="color:#000;font-weight:bold">.</span>remove(finalValue)
+                <span style="color:#000;font-weight:bold">if</span> position1[<span style="color:#099">2</span>] <span style="color:#000;font-weight:bold">==</span> position2[<span style="color:#099">2</span>]:
+                    sudoku[i]<span style="color:#000;font-weight:bold">.</span>remove(finalValue)
+
+        <span style="color:#000;font-weight:bold">else</span>:
+            finalValue <span style="color:#000;font-weight:bold">=</span> choiceElement<span style="color:#000;font-weight:bold">.</span>returnSolved()
+            <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> cells:  <span style="color:#998;font-style:italic">##now we iterate through the remaining unset cells and remove the input if it&#39;s in the same row, col, or box</span>
+                position2 <span style="color:#000;font-weight:bold">=</span> sudoku[i]<span style="color:#000;font-weight:bold">.</span>checkPosition()
+                <span style="color:#000;font-weight:bold">if</span> position1[<span style="color:#099">0</span>] <span style="color:#000;font-weight:bold">==</span> position2[<span style="color:#099">0</span>]:
+                    sudoku[i]<span style="color:#000;font-weight:bold">.</span>remove(finalValue)
+                <span style="color:#000;font-weight:bold">if</span> position1[<span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">==</span> position2[<span style="color:#099">1</span>]:
+                    sudoku[i]<span style="color:#000;font-weight:bold">.</span>remove(finalValue)
+                <span style="color:#000;font-weight:bold">if</span> position1[<span style="color:#099">2</span>] <span style="color:#000;font-weight:bold">==</span> position2[<span style="color:#099">2</span>]:
+                    sudoku[i]<span style="color:#000;font-weight:bold">.</span>remove(finalValue)
+    <span style="color:#000;font-weight:bold">return</span> sudoku
+</code></pre></div><h5 id="remove-numbers-from-the-grid-based-on-the-difficulty--">Remove numbers from the grid based on the difficulty -</h5>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">generate</span>(level):
+    <span style="color:#d14">&#34;&#34;&#34; Input the level of difficulty of the sudoku puzzle. Difficulty levels
+</span><span style="color:#d14">        include ‘Easy’ ‘Medium’ ‘Hard’ and ‘Insane’. Outputs a sudoku of desired
+</span><span style="color:#d14">        difficulty.&#34;&#34;&#34;</span>
+    n <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+    <span style="color:#000;font-weight:bold">if</span> level <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#39;Easy&#39;</span>:
+        p <span style="color:#000;font-weight:bold">=</span> perfectSudoku()
+        s <span style="color:#000;font-weight:bold">=</span> puzzleGen(p)
+        <span style="color:#000;font-weight:bold">if</span> s[<span style="color:#099">2</span>] <span style="color:#000;font-weight:bold">!=</span> <span style="color:#d14">&#39;Easy&#39;</span>:
+            <span style="color:#000;font-weight:bold">return</span> generate(level)
+        <span style="color:#000;font-weight:bold">return</span> convertToArray(s[<span style="color:#099">0</span>])
+    <span style="color:#000;font-weight:bold">if</span> level <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#39;Medium&#39;</span>:
+        p <span style="color:#000;font-weight:bold">=</span> perfectSudoku()
+        s <span style="color:#000;font-weight:bold">=</span> puzzleGen(p)
+        <span style="color:#000;font-weight:bold">while</span> s[<span style="color:#099">2</span>] <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#39;Easy&#39;</span>:
+            n <span style="color:#000;font-weight:bold">+=</span> <span style="color:#099">1</span>
+            s <span style="color:#000;font-weight:bold">=</span> puzzleGen(p)
+            <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#099">50</span>:
+                <span style="color:#000;font-weight:bold">return</span> generate(level)
+        <span style="color:#000;font-weight:bold">if</span> s[<span style="color:#099">2</span>] <span style="color:#000;font-weight:bold">!=</span> <span style="color:#d14">&#39;Medium&#39;</span>:
+            <span style="color:#000;font-weight:bold">return</span> generate(level)
+        <span style="color:#000;font-weight:bold">return</span> convertToArray(s[<span style="color:#099">0</span>])
+    <span style="color:#000;font-weight:bold">...</span>
+    <span style="color:#000;font-weight:bold">else</span>:
+        <span style="color:#000;font-weight:bold">raise</span>(<span style="color:#900;font-weight:bold">ValueError</span>)
+</code></pre></div><h3 id="next-steps">Next Steps</h3>
+<p>With the ability to solve and generate Sudoku Boards at ease, all that&rsquo;s left to do is to create a Graphical User Interface for Native OS using Tkinter and that should wrap up our application. See you there!</p>
+
+      </div>
+
+
+      <footer>
+        
+
+<section class="see-also">
+  
+    
+    
+    
+      <h3>See also in Sudoku Solver</h3>
+      <nav>
+        <ul>
+        
+        
+          
+        
+          
+            <li>
+              <a href="/posts/build-a-sudoku-solver-part-2/">Build a Sudoku Solver - Part 2</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="/posts/build-a-sudoku-solver-part-1/">Build a Sudoku Solver - Part 1</a>
+            </li>
+          
+        
+        </ul>
+      </nav>
+    
+  
+</section>
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      
+
+    </main>
+
+    
+      
+        
+        <script src="/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js"></script>
+      
+    
+
+    
+
+    
+
+    <script>
+(function(f, a, t, h, o, m){
+	a[h]=a[h]||function(){
+		(a[h].q=a[h].q||[]).push(arguments)
+	};
+	o=f.createElement('script'),
+	m=f.getElementsByTagName('script')[0];
+	o.async=1; o.src=t; o.id='fathom-script';
+	m.parentNode.insertBefore(o,m)
+})(document, window, '//analytics.example.com/tracker.js', 'fathom');
+fathom('set', 'siteId', 'ABCDE');
+fathom('trackPageview');
+</script>
+
+
+    <script async defer data-domain="example.com" src="https://analytics.example.com/js/plausible.js"></script>
+
+
+    
+  </body>
+
+</html>

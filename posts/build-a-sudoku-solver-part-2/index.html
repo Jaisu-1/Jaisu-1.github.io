@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="Jaisurya Nanduri">
+    <meta name="description" content="Game Logic Having built our basic board structure, we can create and implement the game logic on top of the existing data structure that is our board. Despite no apparent need for putting the Game Logic in a class, I shall do so to make sure I&rsquo;m writing clean OOP code. This will enable us to import the methods neatly later on , makes the code readable and ensures structural integrity even in a place where it&rsquo;s not necessary.">
+    <meta name="keywords" content="blog,developer,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Build a Sudoku Solver - Part 2"/>
+<meta name="twitter:description" content="Game Logic Having built our basic board structure, we can create and implement the game logic on top of the existing data structure that is our board. Despite no apparent need for putting the Game Logic in a class, I shall do so to make sure I&rsquo;m writing clean OOP code. This will enable us to import the methods neatly later on , makes the code readable and ensures structural integrity even in a place where it&rsquo;s not necessary."/>
+
+    <meta property="og:title" content="Build a Sudoku Solver - Part 2" />
+<meta property="og:description" content="Game Logic Having built our basic board structure, we can create and implement the game logic on top of the existing data structure that is our board. Despite no apparent need for putting the Game Logic in a class, I shall do so to make sure I&rsquo;m writing clean OOP code. This will enable us to import the methods neatly later on , makes the code readable and ensures structural integrity even in a place where it&rsquo;s not necessary." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-2/" />
+<meta property="article:published_time" content="2020-10-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-12T00:00:00+00:00" />
+
+
+
+    <title>
+  Build a Sudoku Solver - Part 2 · Jaisu&#39;s Blog
+</title>
+
+    
+      <link rel="canonical" href="https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-2/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.330c180493e79cf780a97cf007d9748a99f1bd375d8019a2f5a3c97b4dad88cd.css" integrity="sha256-MwwYBJPnnPeAqXzwB9l0ipnxvTddgBmi9aPJe02tiM0=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.ec0a9a93f8c5c41d6d1ef503975f796c43be3e3d69aba427ebeed7e040de7f1c.css" integrity="sha256-7Aqak/jFxB1tHvUDl195bEO&#43;Pj1pq6Qn6&#43;7X4EDefxw=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+      <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+    
+
+    <meta name="generator" content="Hugo 0.73.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="colorscheme-auto"
+        onload=" twemoji.parse(document.body); "
+  >
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      Jaisu&#39;s Blog
+    </a>
+    
+      
+        <span id="dark-mode-toggle" class="float-right">
+          <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </span>
+      
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/about/">About Me/ Contact</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/projects/">Projects</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/resume/">Resume</a>
+            </li>
+          
+        
+        
+        
+          <li class="navigation-item separator">
+            <span>|</span>
+          </li>
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Build a Sudoku Solver - Part 2</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime='2020-10-12T00:00:00Z'>
+                October 12, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <a href="/tags/development/">Development</a>
+      <span class="separator">•</span>
+    <a href="/tags/python/">Python</a>
+      <span class="separator">•</span>
+    <a href="/tags/beginner/">Beginner</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <h2 id="game-logic">Game Logic</h2>
+<p>Having built our basic board structure, we can create and implement the game logic on top of the existing data structure that is our board.
+Despite no apparent need for putting the Game Logic in a class, I shall do so to make sure I&rsquo;m writing clean OOP code. This will enable us to import the methods neatly later on , makes the code readable and ensures structural integrity even in a place where it&rsquo;s not necessary.
+<br></p>
+<center>
+    <img src="/Sudoku-Resources/gamelogic.jpg" alt="gamelogic">
+</center>
+<br>
+<p>Our Game Logic , will have properties that are present in any Game, which are -</p>
+<ol>
+<li>Starting the Game</li>
+<li>Checking for Win Conditions</li>
+<li>Exit the Game</li>
+<li>Restart the Game</li>
+</ol>
+<p>And them, have properties that are present specifically for Sudoku Board -</p>
+<ol>
+<li>No two instances of same number in Row</li>
+<li>No two instances of same number in Column</li>
+<li>No two instances of same number in Box</li>
+</ol>
+<h3 id="start-board">Start Board</h3>
+<p>Out first step in creating the game logic, would be to initiate the board that we can simply import from the Sudoku Board file. Our start puzzle method takes care of initiating or setting up the Board Game. It does this by simply initiating the Sudoku Board and then running the integrity tests. Once all the tests are passed,  our board can be passed to a class variable which stores the 2d variables.</p>
+<p>This is how the code would look like.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">SudokuGame</span>(<span style="color:#0086b3">object</span>):
+    <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">    &#34;&#34;&#34;</span>
+    <span style="color:#000;font-weight:bold">def</span> __init__(<span style="color:#999">self</span>, board_file):
+
+        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>board_file <span style="color:#000;font-weight:bold">=</span> board_file
+        Board <span style="color:#000;font-weight:bold">=</span> SudokuBoard(board_file)
+        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>start_puzzle <span style="color:#000;font-weight:bold">=</span> Board<span style="color:#000;font-weight:bold">.</span>board
+
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">start</span>(<span style="color:#999">self</span>):
+        <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">        &#34;&#34;&#34;</span>
+        <span style="color:#998;font-style:italic"># Final Solved Flag</span>
+        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>game_over <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">False</span>
+        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>puzzle <span style="color:#000;font-weight:bold">=</span> []
+        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">9</span>):
+            <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>puzzle<span style="color:#000;font-weight:bold">.</span>append([])
+            <span style="color:#000;font-weight:bold">for</span> j <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">9</span>):
+                <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>puzzle[i]<span style="color:#000;font-weight:bold">.</span>append(<span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>start_puzzle[i][j])
+</code></pre></div><h3 id="win-conditions">Win Conditions</h3>
+<p>To solve the puzzle, you need to fill in the blank squares with numbers ranging from 1 to 9. The catch is that each square must contain a value that is unique to that row, column, and box.</p>
+<br>
+<center>
+    <img src="/Sudoku-Resources/sudoku-solved.jpg" alt="solved">
+</center>
+<br>
+<h4 id="check-win">Check Win</h4>
+<p>The Check Win method has 4 Conditions to be met for it to pass the flag Victory to <code>true</code>. All of them share the property that the set of the elements in that block, should be exactly equal to the range of elements 0..9. If there&rsquo;s any duplicate in the block, then the set of elements becomes a subset of the range(0..9). We can write a common method for this to extract functionality out.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">__check_block</span>(<span style="color:#999">self</span>, block):
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">set</span>(block) <span style="color:#000;font-weight:bold">==</span> <span style="color:#0086b3">set</span>(<span style="color:#0086b3">range</span>(<span style="color:#099">1</span>, <span style="color:#099">10</span>))
+</code></pre></div><p>A victory condition is triggered when each of the following conditions are met. In each of them, all we have to do is call the check_block but arrange the block properly.</p>
+<p><strong>1. Row condition</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">__check_row</span>(<span style="color:#999">self</span>, row):
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_block(<span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>puzzle[row])
+</code></pre></div><p><strong>2. Column condition</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">__check_column</span>(<span style="color:#999">self</span>, column):
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_block(
+        [<span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>puzzle[row][column] <span style="color:#000;font-weight:bold">for</span> row <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">9</span>)]
+    )
+</code></pre></div><p><strong>3. Box condition</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">__check_square</span>(<span style="color:#999">self</span>, row, column):
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_block(
+        [
+            <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>puzzle[r][c]
+            <span style="color:#000;font-weight:bold">for</span> r <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(row <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">3</span>, (row <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>) <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">3</span>)
+            <span style="color:#000;font-weight:bold">for</span> c <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(column <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">3</span>, (column <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>) <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">3</span>)
+        ]
+    )
+</code></pre></div><p><strong>4. Full Board condition</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">check_win</span>(<span style="color:#999">self</span>):
+
+    <span style="color:#000;font-weight:bold">for</span> row <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">9</span>):
+        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_row(row):
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">False</span>
+
+    <span style="color:#000;font-weight:bold">for</span> column <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">9</span>):
+        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_column(column):
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">False</span>
+
+    <span style="color:#000;font-weight:bold">for</span> row <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">3</span>):
+        <span style="color:#000;font-weight:bold">for</span> col <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">3</span>):
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>__check_square(row, col):
+                <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">False</span>
+
+    <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>game_over <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">True</span>
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">True</span>
+</code></pre></div><p>In each of the above conditions, the terms to trigger victory remain the same, each of the above structures cannot have any repeating integers from 0..9. Once it&rsquo;s verified that each of these conditions are met, our puzzle is solved and we can wave the victory flag.</p>
+<h3 id="exit-condition">Exit Condition</h3>
+<p>The exit condition are triggered once , we have solved our puzzle or click the quit button and once this condition is triggered, we exit the main rootloop by calling the interrupt.</p>
+<p>Our puzzle board will now look like this.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[
+[<span style="color:#099">2</span>, <span style="color:#099">1</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">4</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>],
+[<span style="color:#099">3</span>, <span style="color:#099">8</span>, <span style="color:#099">0</span>, <span style="color:#099">4</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">7</span>, <span style="color:#099">0</span>, <span style="color:#099">2</span>],
+[<span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">7</span>, <span style="color:#099">2</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>],
+[<span style="color:#099">0</span>, <span style="color:#099">2</span>, <span style="color:#099">4</span>, <span style="color:#099">8</span>, <span style="color:#099">0</span>, <span style="color:#099">6</span>, <span style="color:#099">9</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>],
+[<span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>],
+[<span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">0</span>, <span style="color:#099">3</span>, <span style="color:#099">5</span>, <span style="color:#099">4</span>, <span style="color:#099">0</span>],
+[<span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">5</span>, <span style="color:#099">8</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>],
+[<span style="color:#099">9</span>, <span style="color:#099">0</span>, <span style="color:#099">3</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">4</span>, <span style="color:#099">0</span>, <span style="color:#099">2</span>, <span style="color:#099">8</span>],
+[<span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">8</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>, <span style="color:#099">5</span>, <span style="color:#099">7</span>]
+]
+</code></pre></div><p>This is a very raw text form of the data but forms the &ldquo;database&rdquo; for the project.</p>
+<h3 id="next-steps">Next Steps</h3>
+<p>That wraps up our game logic. We have the win conditions, start game and finish game, and our board is tested for various conditions so we can move onto creating the Game AI and a Game Generator.</p>
+<p>In the <a href="/posts/build-a-sudoku-solver-part-3/">next</a> post, we&rsquo;ll solve the tougher challenges of making a Game Solver and a Game Generator.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+<section class="see-also">
+  
+    
+    
+    
+      <h3>See also in Sudoku Solver</h3>
+      <nav>
+        <ul>
+        
+        
+          
+            <li>
+              <a href="/posts/build-a-sudoku-solver-part-3/">Build a Sudoku Solver - Part 3</a>
+            </li>
+          
+        
+          
+        
+          
+            <li>
+              <a href="/posts/build-a-sudoku-solver-part-1/">Build a Sudoku Solver - Part 1</a>
+            </li>
+          
+        
+        </ul>
+      </nav>
+    
+  
+</section>
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+      </div>
+
+      
+
+    </main>
+
+    
+      
+        
+        <script src="/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js"></script>
+      
+    
+
+    
+
+    
+
+    <script>
+(function(f, a, t, h, o, m){
+	a[h]=a[h]||function(){
+		(a[h].q=a[h].q||[]).push(arguments)
+	};
+	o=f.createElement('script'),
+	m=f.getElementsByTagName('script')[0];
+	o.async=1; o.src=t; o.id='fathom-script';
+	m.parentNode.insertBefore(o,m)
+})(document, window, '//analytics.example.com/tracker.js', 'fathom');
+fathom('set', 'siteId', 'ABCDE');
+fathom('trackPageview');
+</script>
+
+
+    <script async defer data-domain="example.com" src="https://analytics.example.com/js/plausible.js"></script>
+
+
+    
+  </body>
+
+</html>

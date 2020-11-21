@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Jaisu&#39;s Blog</title>
+    <link>https://Jaisu-1.github.io/posts/</link>
+    <description>Recent content in Posts on Jaisu&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 13 Oct 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://Jaisu-1.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Build a Sudoku Solver - Part 3</title>
+      <link>https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-3/</link>
+      <pubDate>Tue, 13 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-3/</guid>
+      <description>Game Solver With the Game and it&amp;rsquo;s logic properly set, we can now move on to creating a Game Solver &amp;ldquo;AI&amp;rdquo;. In this case, our AI will be a simple optimizing algorithm. One of the reasons, I created this project is to teach myself how to make Game AI, later on involving Deep Learning but a good way to develop intuition is to solve a small scale problem such as here.</description>
+    </item>
+    
+    <item>
+      <title>Build a Sudoku Solver - Part 2</title>
+      <link>https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-2/</link>
+      <pubDate>Mon, 12 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-2/</guid>
+      <description>Game Logic Having built our basic board structure, we can create and implement the game logic on top of the existing data structure that is our board. Despite no apparent need for putting the Game Logic in a class, I shall do so to make sure I&amp;rsquo;m writing clean OOP code. This will enable us to import the methods neatly later on , makes the code readable and ensures structural integrity even in a place where it&amp;rsquo;s not necessary.</description>
+    </item>
+    
+    <item>
+      <title>Build a Sudoku Solver - Part 1</title>
+      <link>https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-1/</link>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://Jaisu-1.github.io/posts/build-a-sudoku-solver-part-1/</guid>
+      <description>Sudoku Game Sudoku is a logic-based, combinatorial number-placement puzzle. In classic sudoku, the objective is to fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 subgrids that compose the grid [also called &amp;ldquo;boxes&amp;rdquo;, &amp;ldquo;blocks&amp;rdquo;, or &amp;ldquo;regions&amp;rdquo;] contain all of the digits from 1 to 9. The puzzle setter provides a partially completed grid, which for a well-posed puzzle has a single solution.</description>
+    </item>
+    
+    <item>
+      <title>Why Blog?</title>
+      <link>https://Jaisu-1.github.io/posts/why-blog/</link>
+      <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://Jaisu-1.github.io/posts/why-blog/</guid>
+      <description>Why Blog? Starting a blog is a very uncharacteristic step for someone like me who&amp;rsquo;s very judgemental about any attempts at self-marketing. Then why do it? Precisely for that reason. Simply put, I want to record my lessons and projects by documenting them publicly, open to criticism and review by everyone. I think this is the best way to learn and challenge my own brain to become better at being public with my work.</description>
+    </item>
+    
+  </channel>
+</rss>

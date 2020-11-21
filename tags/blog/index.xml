@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on Jaisu&#39;s Blog</title>
+    <link>https://Jaisu-1.github.io/tags/blog/</link>
+    <description>Recent content in Blog on Jaisu&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 07 Oct 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://Jaisu-1.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Why Blog?</title>
+      <link>https://Jaisu-1.github.io/posts/why-blog/</link>
+      <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://Jaisu-1.github.io/posts/why-blog/</guid>
+      <description>Why Blog? Starting a blog is a very uncharacteristic step for someone like me who&amp;rsquo;s very judgemental about any attempts at self-marketing. Then why do it? Precisely for that reason. Simply put, I want to record my lessons and projects by documenting them publicly, open to criticism and review by everyone. I think this is the best way to learn and challenge my own brain to become better at being public with my work.</description>
+    </item>
+    
+  </channel>
+</rss>
